@@ -1,0 +1,36 @@
+<ISSUE> %This is an example of the parameter file
+{
+	type = function_approximation
+	<FA>
+	{
+		output_range = [-0.2, 1.2]
+		required_step_size = 0.005
+	}
+	input_number = 2
+}
+<SDNN>
+{
+	<PC>
+	{
+		n = 2000
+		input_type_and_creation_method = [NUMERICAL(RANDOM_INVERSE(1001,5)):2]
+		random_seed = hardware_entropy
+	}
+
+	<SD>
+	{
+		combination_setting = mutual
+	}
+
+	<NN>
+	{
+		random_seed = hardware_entropy
+		initial_value_range = [-5, 5]
+	}
+}
+<APP>
+{
+	print_progression = Y
+	multi_thread = Y
+	thread_number = 6
+}
