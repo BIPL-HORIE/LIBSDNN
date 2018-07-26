@@ -98,7 +98,7 @@ namespace libsdnn
 			@return void
 			*/
 			template<typename content_type>
-			void ReadParameter(content_type &out_parameter_content, const std::string parameter_name, const std::string default_parameter_content, judgement::JUDGEMENT *judgement = nullptr);
+			void ReadParameter(content_type &out_parameter_content, const std::string parameter_name, const std::string default_parameter_content = "", judgement::JUDGEMENT *judgement = nullptr);
 
 			/*! @brief read parameter
 			If content of the parameter are not suitable, this function reset the parameter and require you to retype suitable content.
@@ -109,7 +109,9 @@ namespace libsdnn
 			@return void
 			*/
 			template<typename content_type>
-			void ReadParameter(std::vector<content_type> &out_parameter_content, const std::string parameter_name, const std::string default_parameter_content, judgement::JUDGEMENT *judgement = nullptr);
+			void ReadParameter(std::vector<content_type> &out_parameter_content, const std::string parameter_name, const std::string default_parameter_content = "", judgement::JUDGEMENT *judgement = nullptr);
+
+			bool IsExistParameter(const std::string parameter_name);
 
 			/*! @brief get list of parameters
 			@param[out] out_parameter_list parameter list

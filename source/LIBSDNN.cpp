@@ -15,49 +15,21 @@
 
 namespace libsdnn
 {
-	std::string CheckParameterFile(std::string parameter_filename)
+	std::string CheckParameterFile(const std::string parameter_filename)
 	{
 		libsdnn::parameters::PARAMETERS check_parameter;
 		check_parameter.LoadFile(parameter_filename);
 		std::string result_buffer;
 
+		// Issue
 		if ((result_buffer = parameter_property::PARAM_INPUT_NUMBER::property_.Check(check_parameter)) != "")
 			return result_buffer+ "\n";
-
-		if ((result_buffer = parameter_property::PARAM_OPTION_MULTI_THREAD_USE::property_.Check(check_parameter)) != "")
-			return result_buffer + "\n";
-
-		if ((result_buffer = parameter_property::PARAM_SD_METHOD::property_.Check(check_parameter)) != "")
-			return result_buffer + "\n";
-
-		std::string method;
-		parameter_property::PARAM_SD_METHOD::property_.Read(method, check_parameter);
-		if (method == parameter_property::PARAM_SD_METHOD::CNT_SD_METHOD::file_)
-		{
-			if ((result_buffer = parameter_property::PARAM_SD_METHOD::PARAM_FILE::property_.Check(check_parameter)) != "")
-				return result_buffer + "\n";
-		}
-
-		if ((result_buffer = parameter_property::PARAM_SD_PC_N::property_.Check(check_parameter)) != "")
-			return result_buffer + "\n";
-
-		int input_number, n;
-		parameter_property::PARAM_INPUT_NUMBER::property_.Read(input_number, check_parameter);
-		parameter_property::PARAM_SD_PC_N::property_.Read(n, check_parameter);
-		auto judgement_buffer = std::make_unique<libsdnn::parameter_property::PARAM_SD_PC_TYPE::JUDGEMENT_PC_TYPE_>(input_number, n);
-		parameter_property::PARAM_SD_PC_TYPE::property_.judgement_ = std::move(judgement_buffer);
-
-		if ((result_buffer = parameter_property::PARAM_SD_PC_TYPE::property_.Check(check_parameter)) != "")
-			return result_buffer + "\n";
 
 		if ((result_buffer = parameter_property::PARAM_SDNN_TYPE::property_.Check(check_parameter)) != "")
 			return result_buffer + "\n";
 
 		std::string issue_type;
-		parameter_property::PARAM_SDNN_TYPE::property_.Read(issue_type,check_parameter);
-
-		if ((result_buffer = parameter_property::PARAM_NN_INITIAL_VALUE_RANGE::property_.Check(check_parameter)) != "")
-			return result_buffer + "\n";
+		parameter_property::PARAM_SDNN_TYPE::property_.Read(issue_type, check_parameter);
 
 		if (issue_type == parameter_property::PARAM_SDNN_TYPE::CNT_SDNN_TYPE_::function_approximation_)
 		{
@@ -71,7 +43,7 @@ namespace libsdnn
 			if ((result_buffer = parameter_property::PARAM_NN_PP_OUTPUT_QUANTIZATION_STEP_SIZE::property_.Check(check_parameter)) != "")
 				return result_buffer + "\n";
 		}
-		else if(issue_type == parameter_property::PARAM_SDNN_TYPE::CNT_SDNN_TYPE_::pattern_recognition_)
+		else if (issue_type == parameter_property::PARAM_SDNN_TYPE::CNT_SDNN_TYPE_::pattern_recognition_)
 		{
 			if ((result_buffer = parameter_property::PARAM_NN_SP_CATEGORY_NUMBER::property_.Check(check_parameter)) != "")
 				return result_buffer + "\n";
@@ -84,8 +56,86 @@ namespace libsdnn
 			libsdnn::utility::error::BugFound(0x206);
 		}
 
+		//SDNN\PC
+
+		if ((result_buffer = parameter_property::PARAM_SD_PC_N::property_.Check(check_parameter)) != "")
+			return result_buffer + "\n";
+
+		int input_number, n;
+		parameter_property::PARAM_INPUT_NUMBER::property_.Read(input_number, check_parameter);
+		parameter_property::PARAM_SD_PC_N::property_.Read(n, check_parameter);
+		auto judgement_buffer = std::make_unique<libsdnn::parameter_property::PARAM_SD_PC_TYPE::JUDGEMENT_PC_TYPE_>(input_number, n);
+		parameter_property::PARAM_SD_PC_TYPE::property_.judgement_ = std::move(judgement_buffer);
+		if ((result_buffer = parameter_property::PARAM_SD_PC_TYPE::property_.Check(check_parameter)) != "")
+			return result_buffer + "\n";
+
+		//SDNN\\SD
+		if ((result_buffer = parameter_property::PARAM_SD_METHOD::property_.Check(check_parameter)) != "")
+			return result_buffer + "\n";
+		std::string method;
+		parameter_property::PARAM_SD_METHOD::property_.Read(method, check_parameter);
+		if (method == parameter_property::PARAM_SD_METHOD::CNT_SD_METHOD::file_)
+		{
+			if ((result_buffer = parameter_property::PARAM_SD_METHOD::PARAM_FILE::property_.Check(check_parameter)) != "")
+				return result_buffer + "\n";
+		}
+
+		//SDNN\\NN
+		if ((result_buffer = parameter_property::PARAM_NN_INITIAL_VALUE_RANGE::property_.Check(check_parameter)) != "")
+			return result_buffer + "\n";
+
+		//APP
+		if ((result_buffer = parameter_property::PARAM_OPTION_MULTI_THREAD_USE::property_.Check(check_parameter)) != "")
+			return result_buffer + "\n";
+
 		return "OK";
 	}
+
+	bool CheckCondition(const std::string &condition)
+	{
+		std::vector<std::string> split_condition;
+		libsdnn::lexial::Split(split_condition, condition, '(');
+
+		if (split_condition.size() != 2)
+			return false;
+		if (split_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::itr_)
+		{
+			std::string buffer = split_condition[1];
+			buffer.erase(--buffer.end());
+			try
+			{
+				unsigned int count = stoul(buffer);
+			}
+			catch (...)
+			{
+				return false;
+			}
+		}
+		else if (split_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::rmse_)
+		{
+			std::string buffer = split_condition[1];
+			buffer.erase(--buffer.end());
+			std::vector<std::string> argument;
+			lexial::Split(argument, buffer, ',');
+			if (argument.size() != 2)
+				return false;
+			try
+			{
+				double rmse = stof(argument[0]);
+				unsigned int count = stoul(argument[1]);
+				if (rmse <= 0)
+					return false;
+			}
+			catch (...)
+			{
+				return false;
+			}
+		}
+		else
+			return false;
+		return true;
+	}
+
 }
 
 class libsdnn::SDNN::SDNN_PIMPL
@@ -122,48 +172,6 @@ private:
 	SDNN_PIMPL(const SDNN_PIMPL&) = delete;
 	void operator=(const SDNN_PIMPL&) = delete;
 
-	bool CheckCondition(std::vector<std::string> &splited_condition)
-	{
-
-		if (splited_condition.size() != 2)
-			return false;
-		if (splited_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::itr_)
-		{
-			std::string buffer = splited_condition[1];
-			buffer.erase(--buffer.end());
-			try
-			{
-				unsigned int count = stoul(buffer);
-			}
-			catch (...)
-			{
-				return false;
-			}
-		}
-		else if (splited_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::rmse_)
-		{
-			std::string buffer = splited_condition[1];
-			buffer.erase(--buffer.end());
-			std::vector<std::string> argument;
-			lexial::Split(argument, buffer, ',');
-			if (argument.size() != 2)
-				return false;
-			try
-			{
-				double rmse = stof(argument[0]);
-				unsigned int count = stoul(argument[1]);
-				if (rmse <= 0)
-					return false;
-			}
-			catch (...)
-			{
-				return false;
-			}
-		}
-		else
-			return false;
-	return true;
-	}
 	
 public:
 	SDNN_PIMPL() :sd_(nullptr), nn_(nullptr), sdnn_statement_(instance){ OutProgression = (&SDNN_PIMPL::OutProgressionDefault); }
@@ -250,10 +258,7 @@ public:
 		}
 
 		std::string condition_buffer = completion_condition;
-		std::vector<std::string> splited_condition;
-
-		lexial::Split(splited_condition, completion_condition, '(');
-		while (!CheckCondition(splited_condition))
+		while (!CheckCondition(condition_buffer))
 		{
 			std::cout << "training-completion condition is set with incorrect strings." << std::endl;
 			std::cout << "You can set the following:" << std::endl;
@@ -262,24 +267,25 @@ public:
 			std::cout << "Type a correct string: ";
 			std::cin >> condition_buffer;
 			std::cin.ignore();
-			lexial::Split(splited_condition, completion_condition, '(');
 		}
-		
-		if (splited_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::itr_)
+		std::vector<std::string> split_condition;
+		lexial::Split(split_condition, completion_condition, '(');
+
+		if (split_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::itr_)
 		{
-			splited_condition[1].erase(--splited_condition[1].end());
-			int count = stoi(splited_condition[1]);
+			split_condition[1].erase(--split_condition[1].end());
+			int count = stoi(split_condition[1]);
 			for (int i = 1; i <= count; i++)
 			{
 				(this->*OutProgression)(i, count);
 				TrainOnce(input, target);
 			}
 		}
-		else if (splited_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::rmse_)
+		else if (split_condition[0] == libsdnn::parameter_property::PARAM_NN_TRAINING_END::CNT_NN_TRAINING_END_::rmse_)
 		{
-			splited_condition[1].erase(--splited_condition[1].end());
+			split_condition[1].erase(--split_condition[1].end());
 			std::vector<std::string> argument;
-			lexial::Split(argument, splited_condition[1], ',');
+			lexial::Split(argument, split_condition[1], ',');
 
 			double rmse = stof(argument[0]);
 			int count = stoi(argument[1]);
@@ -446,16 +452,6 @@ double libsdnn::SDNN::Estimate(const std::vector<double> &input)
 	return pimpl_->Estimate(input);
 }
 
-double libsdnn::SDNN::Estimate4Matlab(double *input)
-{
-	unsigned int input_number = 0;
-	parameter_property::PARAM_INPUT_NUMBER::property_.Read(input_number, pimpl_->sdnn_parameter_);
-	std::vector<double> input_matrix;
-	for (unsigned int i_counter = 0; i_counter < input_number; i_counter++)
-		input_matrix.push_back(*input++);
-	return pimpl_->Estimate(input_matrix);
-}
-
 void libsdnn::SDNN::GetPotential(std::vector<int> &out_potential, const std::vector<double> input)
 {
 	pimpl_->GetPotential(out_potential, input);
@@ -469,24 +465,6 @@ void libsdnn::SDNN::TrainOneSample(const std::vector<double> &input, const doubl
 void libsdnn::SDNN::Train(const std::vector<std::vector<double>>input, const std::vector<double> target, const std::string &completion_condition)
 {
 	pimpl_->Train(input, target,completion_condition);
-}
-
-void libsdnn::SDNN::Train4Matlab(double *input, double *target, int target_number, const std::string &completion_condition)
-{
-	std::vector<std::vector<double>> input_matrix(target_number);
-	std::vector<double> target_matrix;
-	unsigned int input_number = 0;
-	parameter_property::PARAM_INPUT_NUMBER::property_.Read(input_number,pimpl_->sdnn_parameter_);
-
-	for (int t_counter = 0; t_counter < target_number; t_counter++)
-	{
-		target_matrix.push_back(*target++);
-		for (unsigned int i_counter = 0; i_counter < input_number; i_counter++)
-		{
-			input_matrix[t_counter].push_back(*input++);
-		}
-	}
-	pimpl_->Train(input_matrix, target_matrix, completion_condition);
 }
 
 void libsdnn::SDNN::Save(const std::string &filename)

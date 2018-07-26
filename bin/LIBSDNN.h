@@ -5,7 +5,8 @@
 
 namespace libsdnn
 {
-	std::string CheckParameterFile(std::string parameter_filename);
+	std::string CheckParameterFile(const std::string parameter_filename);
+	bool CheckCondition(const std::string &condition);
 
 	class SDNN
 	{
@@ -28,13 +29,10 @@ namespace libsdnn
 		void Load(const std::string &filename);
 		void Reset(void);
 
-		void GetPotential(std::vector<int> &out_potential, const std::vector<double> input);
 		template <typename content_type>
 		void GetParameter(content_type &out_parameter, const std::string &parameter_name);
+		void GetPotential(std::vector<int> &out_potential, const std::vector<double> input);
 		void GetW(std::vector<int> &out_w);
 
-		//for MATLAB
-		void Train4Matlab(double *input, double *target, int target_num, const std::string &completion_condition);
-		double Estimate4Matlab(double *input);
 	};
 }

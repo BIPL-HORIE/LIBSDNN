@@ -24,7 +24,10 @@ namespace libsdnn
 			}
 			std::string Check(parameters::PARAMETERS &parameter)
 			{
-				return (!judgement_->judgement(&parameter, name_, default_)) ? "Parameter<" + name_ + "> is incorrect.\nYou can set the following parameters.\n" + judgement_->GetList() : "";
+				if (parameter.IsExistParameter(name_))
+					return (!judgement_->judgement(&parameter, name_, default_)) ? "Parameter<" + name_ + "> is incorrect.\nYou can set the following parameters.\n" + judgement_->GetList() : "";
+				else
+					return "Parameter<" + name_ + "> does not exist";
 			}
 		};
 

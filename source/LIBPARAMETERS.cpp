@@ -186,6 +186,37 @@ public:
 		}
 
 	}
+	
+	bool IsExistParameter(const std::string parameter_name)
+	{
+		std::vector<std::string> tag_list;
+		std::string parameter_name_buffer;
+		SplitTagName(tag_list, parameter_name_buffer, parameter_name);
+
+		if (tag_list.size() == 0)
+		{
+			for (auto leaf_itr = leafs_.begin(); leaf_itr != leafs_.end(); leaf_itr++)
+			{
+				if (leaf_itr->IsSameName(parameter_name_buffer))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		else
+		{
+			for (auto down_node_itr = down_nodes_.begin(); down_node_itr != down_nodes_.end(); down_node_itr++)
+			{
+				if (down_node_itr->IsSameName(tag_list.front()))
+				{
+					return down_node_itr->isExistParameter(tag_list,parameter_name_buffer);
+				}
+			}
+			return false;
+		}
+
+	}
 
 	/*! @brief get list of parameter
 	@param[out] out_parameter_list list of parameter
@@ -583,4 +614,9 @@ void libsdnn::parameters::PARAMETERS::ListParameter(std::string &out_parameter_l
 		//? ERROR ?//
 		utility::error::BugFound(0xff0c);
 	}
+}
+
+bool libsdnn::parameters::PARAMETERS::IsExistParameter(const std::string parameter_name)
+{
+	return pimpl_->IsExistParameter(parameter_name);
 }

@@ -129,6 +129,37 @@ namespace libsdnn
 					}
 				}
 
+				bool isExistParameter(std::vector<std::string> &tag_list, const std::string &parameter_name)
+				{
+					if (tag_list.front() != node_name_)
+					{
+						utility::error::BugFound(0x2f00fe);
+					}
+					if (tag_list.size() == 1)
+					{
+						for (auto leaf_itr = leafs_.begin(); leaf_itr != leafs_.end(); leaf_itr++)
+						{
+							if (leaf_itr->IsSameName(parameter_name))
+							{
+								return true;
+							}
+						}
+						return false;
+					}
+					else
+					{
+						tag_list.erase(tag_list.begin());
+						for (auto down_node_itr = down_nodes_.begin(); down_node_itr != down_nodes_.end(); down_node_itr++)
+						{
+							if (down_node_itr->IsSameName(tag_list.front()))
+							{
+								return down_node_itr->isExistParameter(tag_list, parameter_name);
+							}
+						}
+						return false;
+					}
+				}
+
 				void ListParameter(std::string &out_parameter_list, const int tab_number)const
 				{
 					for (int i = 0; i < tab_number; i++)
