@@ -213,7 +213,8 @@ public:
 				parameter_property::PARAM_OPTION_MULTI_THREAD_USE::PARAM_OPTION_MULTI_THREAD_NUMBER::property_.Read(thread_number, sdnn_parameter_);
 				omp_set_num_threads(thread_number);
 #else
-				std::cout << "please compile with -openmp"<< std::endl;
+				std::cout << "LIBSDNN.lib was not compiled with -openmp"<< std::endl;
+				std::cout << "Thus, the calculation of SDNN will be not performed in parallel." << std::endl;
 #endif
 
 			}
