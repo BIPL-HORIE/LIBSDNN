@@ -1,3 +1,5 @@
+//# Licensed under the BSD 3-Clause License - https://opensource.org/licenses/BSD-3-Clause
+
 /*! @file LIBSDNN_PARAMETERS.h
 @brief classes and functions for parameters
 @author Kazumasa HORIE

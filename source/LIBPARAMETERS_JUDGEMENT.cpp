@@ -1,3 +1,5 @@
+//# Licensed under the BSD 3-Clause License - https://opensource.org/licenses/BSD-3-Clause
+
 #include "LIBPARAMETERS_JUDGEMENT.h"
 #include "LIBSDNN_UTILITY.h"
 #include "LIBSDNN_LEXIAL.h"

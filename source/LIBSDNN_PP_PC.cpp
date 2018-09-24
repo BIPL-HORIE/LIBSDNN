@@ -1,3 +1,5 @@
+//# Licensed under the BSD 3-Clause License - https://opensource.org/licenses/BSD-3-Clause
+
 #include"LIBSDNN_PP_PC.h"
 
 #include "LIBSDNN_PARAMETERS.h"
