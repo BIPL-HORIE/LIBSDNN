@@ -517,9 +517,9 @@ void libsdnn::base::SDNN_PC::CorrelationMatrix(const std::string &correlation_ma
 			correlation_matrix.push_back(correlation_buffer);
 		}
 
-		for (unsigned int i = 0; i < correlation_matrix.size(); i++)
+		for (int i = 0; i < correlation_matrix.size(); i++)
 		{
-			for (unsigned int j = i; j >= 0; j--)
+			for (int j = i; j >= 0; j--)
 			{
 				if (i == j)
 					if (correlation_matrix[i][i] != 1)
