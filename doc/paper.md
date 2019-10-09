@@ -14,7 +14,7 @@ authors:
     orcid: 0000-0000-0000-0000
     affiliation: 2
   - name: Masahiko Morita
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-7411-4778
     affiliation: 3
 affiliations:
  - name: Center for Computational Sciences, University of Tsukuba
