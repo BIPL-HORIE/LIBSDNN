@@ -11,7 +11,7 @@ authors:
     orcid: 0000-0003-0872-7098
     affiliation: 1 
   - name: Atsuo Suemitsu
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-0752-0063
     affiliation: 2
   - name: Masahiko Morita
     orcid: 0000-0002-7411-4778
