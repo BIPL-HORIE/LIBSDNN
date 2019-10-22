@@ -62,7 +62,7 @@ In the following sections, we demonstrate the performance of the library by comp
 To demonstrate the performance of LIBSDNN and the SDNN itself, we perform a task of approximating a two-variable discontinuous function with various spatial frequencies depending on the area (Formula (1); Figure 1(a)); this was also shown in the study by Nonaka et al. [@Nonaka:2011]. The source code and the parameter files of this demonstration are provided in the LIBSDNN library package. Please check the libsdnn&#92;doc&#92;example folder.
 
 ```math
-f(x,y) = \left\right.,
+f(x,y) = 
 ```
 where $x,y \in [0,1]$.
 
