@@ -64,8 +64,8 @@ To demonstrate the performance of LIBSDNN and the SDNN itself, we perform a task
 ```math
 f(x) = \left\{
 \begin{array}{ll}
-1 & (x \geq 0) \\
-0 & (x \lt 0)
+1 & ((x-0.5)^2+(y-0.5)^2 <= 0.04) \\
+\frac{1+x}{2}sin^2(6\pixy^2) & (otherwise)
 \end{array}
 \right.
 ```
