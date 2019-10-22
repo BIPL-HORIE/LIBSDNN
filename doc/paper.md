@@ -61,10 +61,12 @@ In the following sections, we demonstrate the performance of the library by comp
 
 To demonstrate the performance of LIBSDNN and the SDNN itself, we perform a task of approximating a two-variable discontinuous function with various spatial frequencies depending on the area (Formula (1); Figure 1(a)); this was also shown in the study by Nonaka et al. [@Nonaka:2011]. The source code and the parameter files of this demonstration are provided in the LIBSDNN library package. Please check the libsdnn&#92;doc&#92;example folder.
 
-$$f(x,y) = \left\{\begin{array}{l}
+```math
+f(x,y) = \left\{\begin{array}{l}
 1 & ((x-0.5)^2 + (y-0.5)^2 <= 0.04)\cr
 \frac{1+x}{2}sin^2(6\pi\sqrt{x}y^2) & \textrm{otherwise}
-\end{array}\right.,$$
+\end{array}\right.,
+```
 where $x,y \in [0,1]$.
 
 We randomly chose 2000 points from the 1001×1001 lattice points except for the blank areas, as shown in Figure 1(b); we used those as training samples. After the SDNN learned the training sample 300 times, it estimated the output for all points.
