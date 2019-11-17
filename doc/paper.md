@@ -74,7 +74,7 @@ where $x,y \in [0,1]$.
 
 We randomly chose 2000 points from the 1001×1001 lattice points except for the blank areas, as shown in Figure 1(b); we used those as training samples. After the SDNN learned the training sample 300 times, it estimated the output for all points.
 
-|![(a) Target](target.png)|![(b) Sample](sample.png)|![(c) LIBSDNN](SDNN.png)|![(d) LIBSVM](SVM.png)|
+|![(a) Target](target.png =250x)|![(b) Sample](sample.png =250x)|![(c) LIBSDNN](SDNN.png =250x)|![(d) LIBSVM](SVM.png =250x)|
 <div style = "text-align: center;">Figure 1. Performance of LIBSDNN and LIBSVM in a two-variable function approximation task</div>
 
 Figure 1(c) shows the estimation result. We can see that the SDNN approximates the target function properly even in the blank areas, indicating a very high generalization ability. The approximation error (root mean squared error (RMSE)) was 0.0859. As for the computational cost of LIBSDNN, the training process took about 240 s and required 8 MB of memory resources.
