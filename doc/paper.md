@@ -76,9 +76,10 @@ We randomly chose 2000 points from the 1001×1001 lattice points except for the 
 
 <table border = 0>
 <tr>
-<td align = "center"> <img src = "target.png" height = "150"><br>(a) Target</td>
-<td align = "center"> <img src = "sample.png" height = "150"><br>(b) Training <td align = "center"> <img src = "SDNN.png" height = "150"><br>(c) LIBSDNN</td>
-<td align = "center"> <img src = "SVM.png" height = "150"><br>(d) LIBSVM</td>
+<td align = "center"> [(a) Target](target.png)</td>
+<td align = "center"> [(b) Sample](sample.png)</td>
+<td align = "center"> [(c) LIBSDNN](SDNN.png)</td>
+<td align = "center"> [(d) LIBSVM](SVM.png)</td>
 </table>
 <div style = "text-align: center;">Figure 1. Performance of LIBSDNN and LIBSVM in a two-variable function approximation task</div>
 
