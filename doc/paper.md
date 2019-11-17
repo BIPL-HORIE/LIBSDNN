@@ -75,6 +75,7 @@ where $x,y \in [0,1]$.
 We randomly chose 2000 points from the 1001×1001 lattice points except for the blank areas, as shown in Figure 1(b); we used those as training samples. After the SDNN learned the training sample 300 times, it estimated the output for all points.
 
 ![(a) Target](target.png) ![(b) Sample](sample.png) ![(c) LIBSDNN](SDNN.png) ![(d) LIBSVM](SVM.png)
+
 (a) Target (b) Sample (c) LIBSDNN (d) LIBSVM 
 
 <div style = "text-align: center;">Figure 1. Performance of LIBSDNN and LIBSVM in a two-variable function approximation task</div>
