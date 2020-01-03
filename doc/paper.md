@@ -55,7 +55,12 @@ Because of these advantages, an SDNN is a very practical function approximator s
 
 We have therefore developed an SDNN library to facilitate the implementation and application of an SDNN and named it ``LIBSDNN``. This library is written in C++ and provides very efficient codes for implementing SDNNs, including those for distributed computation (OpenMP). Some research on the performance of SDNN has been conducted using our library [@Ichiba:2019;@Someno:2019], and we are conducting some application research with it.
 
-In the following sections, we demonstrate the performance of the library by comparison with LIBSVM, a popular library for SVM and SVR. Please refer to the documents in the LIBSDNN package, for more information on SDNN itself and the usage of LIBSDNN.
+In the following sections, we explain the detail of the SDNN and demonstrate the performance of the library by comparison with LIBSVM, a popular library for SVM and SVR. Please refer to the documents in the LIBSDNN package, for more information on the usage of LIBSDNN.
+
+# Selective Desensitization Neural Networks
+## Pattern coding
+## Selective Desensitization
+## Parallel Perceptrons
 
 # Performance of LIBSDNN
 
