@@ -67,7 +67,7 @@ f(x) = \left\{
 1 & ((x-0.5)^2+(y-0.5)^2 \leq 0.04) \\
 \frac{1+x}{2}\sin^{2}(6\pi xy^{2}) & (otherwise)
 \end{array}
-\right.
+\right.\tag{1}
 $$
 
 where $x,y \in [0,1]$.
